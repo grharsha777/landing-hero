@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Two-Column Hero with CSS Grid & SVG Illustration</title>
+<style>
+  /* Reset and base */
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+    color: #1a1a1a;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+  }
+  
+  .hero-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    max-width: 960px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(102, 166, 255, 0.25);
+    padding: 40px 60px;
+    align-items: center;
+  }
+  
+  /* Responsive layout */
+  @media (max-width: 720px) {
+    .hero-container {
+      grid-template-columns: 1fr;
+      padding: 30px 20px;
+      gap: 32px;
+    }
+  }
+
+  .hero-text {
+    font-size: 1.125rem;
+  }
+  .hero-text h1 {
+    font-size: 3rem;
+    font-weight: 900;
+    margin-bottom: 16px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-text p {
+    color: #555;
+    line-height: 1.6;
+  }
+
+  /* Button */
+  .hero-text button {
+    margin-top: 32px;
+    padding: 16px 48px;
+    font-weight: 700;
+    font-size: 1.125rem;
+    background: #667eea;
+    border: none;
+    border-radius: 40px;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+    transition: background 0.3s ease;
+  }
+  .hero-text button:hover,
+  .hero-text button:focus {
+    background: #5a6edc;
+    outline: none;
+  }
+
+  /* Illustration container */
+  .illustration {
+    max-width: 400px;
+    position: relative;
+  }
+
+  /* Floating animation */
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-15px);
+    }
+  }
+  svg {
+    width: 100%;
+    height: auto;
+    animation: float 5s ease-in-out infinite;
+  }
+</style>
+</head>
+<body>
+
+<div class="hero-container" role="region" aria-labelledby="hero-title">
+  <div class="hero-text">
+    <h1 id="hero-title">Unlock Creativity & Code</h1>
+    <p>Empower your projects with modern CSS layout magic and beautiful micro-illustrations crafted purely with SVG and CSS animations.</p>
+    <button type="button" aria-label="Get started now">Get Started</button>
+  </div>
+  <div class="illustration" aria-hidden="true">
+    <svg viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration of a glowing network node">
+      <circle cx="120" cy="120" r="100" fill="url(#gradient)" />
+      <circle cx="120" cy="120" r="90" stroke="#667eea" stroke-width="5" />
+      <circle cx="120" cy="50" r="15" fill="#764ba2" />
+      <circle cx="180" cy="120" r="15" fill="#667eea" />
+      <circle cx="120" cy="190" r="15" fill="#964ccf" />
+      <circle cx="60" cy="120" r="15" fill="#a87fff" />
+      
+      <line x1="120" y1="50" x2="180" y2="120" stroke="#a280ff" stroke-width="3" />
+      <line x1="180" y1="120" x2="120" y2="190" stroke="#946bbe" stroke-width="3" />
+      <line x1="120" y1="190" x2="60" y2="120" stroke="#7f54f3" stroke-width="3" />
+      <line x1="60" y1="120" x2="120" y2="50" stroke="#8b75d7" stroke-width="3" />
+      
+      <defs>
+        <radialGradient id="gradient" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0%" stop-color="#764ba2" stop-opacity="0.6"/>
+          <stop offset="100%" stop-color="#667eea" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+    </svg>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Vanilla JS Accessible UI Components</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 40px;
+    background: #f7f9fc;
+    color: #222;
+  }
+  h2 {
+    margin-bottom: 10px;
+  }
+  /* Modal Styles */
+  .modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  .modal-overlay.active {
+    display: flex;
+  }
+  .modal {
+    background: white;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 90%;
+    padding: 20px 24px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    position: relative;
+  }
+  .modal-header {
+    font-weight: 700;
+    font-size: 1.25rem;
+    margin-bottom: 12px;
+  }
+  .modal-close {
+    position: absolute;
+    top: 12px; right: 12px;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+  .modal-close:focus {
+    outline: 2px solid #4a90e2;
+  }
+
+  /* Tabs */
+  .tabs {
+    max-width: 600px;
+    margin-top: 48px;
+  }
+  .tablist {
+    display: flex;
+    border-bottom: 2px solid #ddd;
+  }
+  .tab {
+    cursor: pointer;
+    padding: 12px 24px;
+    border: none;
+    background: none;
+    font-weight: 600;
+    border-bottom: 3px solid transparent;
+    transition: border-color 0.3s;
+  }
+  .tab[aria-selected="true"] {
+    border-bottom-color: #4a90e2;
+    color: #4a90e2;
+  }
+  .tab:focus {
+    outline: 2px solid #4a90e2;
+    outline-offset: 4px;
+  }
+  .tabpanel {
+    padding: 20px;
+    background: white;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    margin-top: -2px;
+  }
+
+  /* Carousel */
+  .carousel {
+    max-width: 600px;
+    margin-top: 48px;
+    position: relative;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+  }
+  .carousel-track {
+    display: flex;
+    transition: transform 0.4s ease-in-out;
+  }
+  .carousel-slide {
+    min-width: 100%;
+    padding: 40px;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    text-align: center;
+  }
+  .carousel-slide h3 {
+    margin-bottom: 12px;
+  }
+  .carousel-controls {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    pointer-events: none;
+  }
+  .carousel-button {
+    pointer-events: all;
+    position: absolute;
+    background: rgba(0,0,0,0.4);
+    border: none;
+    color: white;
+    font-weight: 700;
+    font-size: 1.5rem;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    border-radius: 50%;
+    user-select: none;
+    transform: translateY(-50%);
+  }
+  .carousel-button:focus {
+    outline: 2px solid #4a90e2;
+  }
+  .carousel-button.prev {
+    left: 10px;
+  }
+  .carousel-button.next {
+    right: 10px;
+  }
+</style>
+</head>
+<body>
+
+<h2>Modal Component</h2>
+<button id="openModalBtn" aria-haspopup="dialog" aria-controls="modal" aria-expanded="false">Open Modal</button>
+
+<div id="modalOverlay" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle" tabindex="-1">
+  <div class="modal" role="document">
+    <button class="modal-close" aria-label="Close modal" id="closeModalBtn">&times;</button>
+    <h3 id="modalTitle" class="modal-header">Example Modal</h3>
+    <p>This is a reusable modal component with full keyboard and screen reader accessibility.</p>
+    <p>Focus is trapped inside while open, and modal can be closed via ESC or close button.</p>
+  </div>
+</div>
+
+<h2>Tabs Component</h2>
+<div class="tabs" role="tablist" aria-label="Sample Tabs" id="tabs">
+  <button class="tab" role="tab" aria-selected="true" aria-controls="panel1" id="tab1" tabindex="0">Tab 1</button>
+  <button class="tab" role="tab" aria-selected="false" aria-controls="panel2" id="tab2" tabindex="-1">Tab 2</button>
+  <button class="tab" role="tab" aria-selected="false" aria-controls="panel3" id="tab3" tabindex="-1">Tab 3</button>
+
+  <div tabindex="0" role="tabpanel" id="panel1" aria-labelledby="tab1" class="tabpanel">Content for Tab 1. This is the active panel.</div>
+  <div tabindex="0" role="tabpanel" id="panel2" aria-labelledby="tab2" class="tabpanel" hidden>Content for Tab 2.</div>
+  <div tabindex="0" role="tabpanel" id="panel3" aria-labelledby="tab3" class="tabpanel" hidden>Content for Tab 3.</div>
+</div>
+
+<h2>Carousel Component</h2>
+<div class="carousel" aria-roledescription="carousel" aria-label="Sample Carousel" tabindex="0">
+  <div class="carousel-track" id="carouselTrack">
+    <div class="carousel-slide" aria-roledescription="slide" aria-label="Slide 1" tabindex="-1">
+      <h3>Slide 1</h3>
+      <p>This is the first slide.</p>
+    </div>
+    <div class="carousel-slide" aria-roledescription="slide" aria-label="Slide 2" tabindex="-1">
+      <h3>Slide 2</h3>
+      <p>This is the second slide.</p>
+    </div>
+    <div class="carousel-slide" aria-roledescription="slide" aria-label="Slide 3" tabindex="-1">
+      <h3>Slide 3</h3>
+      <p>This is the third slide.</p>
+    </div>
+  </div>
+  <div class="carousel-controls">
+    <button class="carousel-button prev" aria-label="Previous Slide">&lt;</button>
+    <button class="carousel-button next" aria-label="Next Slide">&gt;</button>
+  </div>
+</div>
+
+<script>
+  // === Modal component ===
+  (function(){
+    const openBtn = document.getElementById('openModalBtn');
+    const overlay = document.getElementById('modalOverlay');
+    const closeBtn = document.getElementById('closeModalBtn');
+    let lastFocusedElement;
+
+    function trapFocus(e) {
+      const focusableElements = overlay.querySelectorAll(
+        'a[href], area[href], input:not([disabled]), select:not([disabled]),' +
+        'textarea:not([disabled]), button:not([disabled]), iframe, object, embed, ' +
+        '*[tabindex]:not([tabindex="-1"]), *[contenteditable]'
+      );
+      const firstEl = focusableElements[0];
+      const lastEl = focusableElements[focusableElements.length -1];
+
+      if(e.key === 'Tab' || e.keyCode === 9){
+        if(e.shiftKey){
+          if(document.activeElement === firstEl){
+            e.preventDefault();
+            lastEl.focus();
+          }
+        } else {
+          if(document.activeElement === lastEl){
+            e.preventDefault();
+            firstEl.focus();
+          }
+        }
+      }
+      if(e.key === 'Escape' || e.keyCode === 27){
+        closeModal();
+      }
+    }
+
+    function openModal() {
+      lastFocusedElement = document.activeElement;
+      overlay.classList.add('active');
+      overlay.setAttribute('aria-hidden', 'false');
+      openBtn.setAttribute('aria-expanded', 'true');
+      closeBtn.focus();
+      document.body.style.overflow = 'hidden';
+      document.addEventListener('keydown', trapFocus);
+    }
+    function closeModal() {
+      overlay.classList.remove('active');
+      overlay.setAttribute('aria-hidden', 'true');
+      openBtn.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+      lastFocusedElement.focus();
+      document.removeEventListener('keydown', trapFocus);
+    }
+
+    openBtn.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+    overlay.addEventListener('click', e => {
+      if(e.target === overlay){
+        closeModal();
+      }
+    });
+  })();
+
+  // === Tabs component ===
+  (function(){
+    const tabsEl = document.getElementById('tabs');
+    const tabs = tabsEl.querySelectorAll('[role="tab"]');
+    const panels = tabsEl.querySelectorAll('[role="tabpanel"]');
+
+    function activateTab(tab) {
+      tabs.forEach(t => {
+        t.setAttribute('aria-selected', 'false');
+        t.setAttribute('tabindex', '-1');
+      });
+      panels.forEach(panel => {
+        panel.hidden = true;
+      });
+
+      tab.setAttribute('aria-selected', 'true');
+      tab.setAttribute('tabindex', '0');
+      const panelId = tab.getAttribute('aria-controls');
+      document.getElementById(panelId).hidden = false;
+      tab.focus();
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        activateTab(tab);
+      });
+      tab.addEventListener('keydown', e => {
+        let index = Array.prototype.indexOf.call(tabs, e.target);
+        if(e.key === 'ArrowRight' || e.key === 'ArrowDown'){
+          index++;
+          if(index >= tabs.length) index = 0;
+          tabs[index].focus();
+        } else if(e.key === 'ArrowLeft' || e.key === 'ArrowUp'){
+          index--;
+          if(index < 0) index = tabs.length -1;
+          tabs[index].focus();
+        } else if(e.key === 'Home'){
+          e.preventDefault();
+          tabs[0].focus();
+        } else if(e.key === 'End'){
+          e.preventDefault();
+          tabs[tabs.length-1].focus();
+        } else if(e.key === 'Enter' || e.key === ' '){
+          e.preventDefault();
+          activateTab(tab);
+        }
+      });
+    });
+  })();
+
+  // === Carousel component ===
+  (function(){
+    const carousel = document.querySelector('.carousel');
+    const track = carousel.querySelector('.carousel-track');
+    const slides = carousel.querySelectorAll('.carousel-slide');
+    const prevBtn = carousel.querySelector('.carousel-button.prev');
+    const nextBtn = carousel.querySelector('.carousel-button.next');
+    let currentIndex = 0;
+
+    function updateCarousel(){
+      const offset = -currentIndex * 100;
+      track.style.transform = `translateX(${offset}%)`;
+      slides.forEach((slide, i) => {
+        slide.setAttribute('tabindex', i === currentIndex ? '0' : '-1');
+      });
+      updateButtons();
+    }
+    function updateButtons(){
+      prevBtn.disabled = currentIndex === 0;
+      nextBtn.disabled = currentIndex === slides.length -1;
+    }
+
+    prevBtn.addEventListener('click', () => {
+      if(currentIndex > 0){
+        currentIndex--;
+        updateCarousel();
+      }
+    });
+    nextBtn.addEventListener('click', () => {
+      if(currentIndex < slides.length - 1){
+        currentIndex++;
+        updateCarousel();
+      }
+    });
+    
+    // Keyboard navigation left/right arrows
+    carousel.addEventListener('keydown', e => {
+      if(e.key === 'ArrowLeft'){
+        prevBtn.click();
+      } else if(e.key === 'ArrowRight'){
+        nextBtn.click();
+      }
+    });
+
+    updateCarousel();
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Creative Landing Page</title>
+<style>
+  /* Reset and base */
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+  html, body {
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    overflow: hidden;
+    color: white;
+  }
+
+  /* Centered container */
+  .hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
+  }
+
+  /* Animated headline */
+  .hero h1 {
+    font-size: 3.5rem;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    position: relative;
+    animation: glowPulse 3s ease-in-out infinite;
+    text-shadow:
+      0 0 10px #7f54f3,
+      0 0 20px #6a11cb,
+      0 0 30px #2575fc,
+      0 0 40px #7f54f3,
+      0 0 70px #6a11cb;
+  }
+
+  /* Animated subheading text */
+  .hero p {
+    font-size: 1.25rem;
+    margin-top: 20px;
+    color: #d0d6f9cc;
+    max-width: 600px;
+    animation: fadeInUp 2s ease forwards;
+    opacity: 0;
+    animation-delay: 1.5s;
+  }
+
+  /* Call to action button */
+  .cta-button {
+    margin-top: 40px;
+    padding: 18px 48px;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #fff;
+    background: linear-gradient(45deg, #7f54f3, #2575fc);
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+    box-shadow: 0 0 30px #7f54f3;
+    animation: pulseButton 2.5s infinite ease-in-out;
+    transition: background 0.3s ease;
+  }
+  .cta-button:hover {
+    background: linear-gradient(45deg, #4d31ba, #1a49c1);
+    box-shadow: 0 0 40px #4d31ba;
+  }
+
+  /* Keyboard arrow animation */
+  .hero .arrow {
+    margin-top: 60px;
+    font-size: 2.5rem;
+    color: #7f54f3;
+    animation: arrowBounce 2.5s infinite;
+  }
+
+  /* Keyframes */
+  @keyframes glowPulse {
+    0%, 100% {
+      text-shadow:
+        0 0 10px #7f54f3,
+        0 0 20px #6a11cb,
+        0 0 30px #2575fc,
+        0 0 40px #7f54f3,
+        0 0 70px #6a11cb;
+      color: #fff;
+    }
+    50% {
+      text-shadow:
+        0 0 25px #a280ff,
+        0 0 45px #8367ff,
+        0 0 60px #735ee8,
+        0 0 75px #8367ff,
+        0 0 90px #a280ff;
+      color: #d8cbff;
+    }
+  }
+
+  @keyframes pulseButton {
+    0%, 100% {
+      box-shadow: 0 0 20px #7f54f3;
+      transform: scale(1);
+    }
+    50% {
+      box-shadow: 0 0 35px #ad87ff;
+      transform: scale(1.05);
+    }
+  }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+  }
+
+  @keyframes arrowBounce {
+    0%, 100% {
+      transform: translateY(0);
+      opacity: 0.7;
+    }
+    50% {
+      transform: translateY(15px);
+      opacity: 1;
+    }
+  }
+
+  /* Responsive */
+  @media (max-width: 480px) {
+    .hero h1 {
+      font-size: 2.5rem;
+    }
+    .hero p {
+      font-size: 1rem;
+      max-width: 90%;
+    }
+    .cta-button {
+      padding: 14px 36px;
+      font-size: 1rem;
+    }
+  }
+</style>
+</head>
+<body>
+  <section class="hero" role="main" aria-label="Creative Landing Section">
+    <h1>Experience the Future</h1>
+    <p>Your innovative solution starts here. Discover creativity, technology, and performance merged seamlessly.</p>
+    <button class="cta-button" aria-label="Get Started Button">Get Started</button>
+    <div class="arrow" aria-hidden="true">⬇️</div>
+  </section>
+</body>
+</html>
